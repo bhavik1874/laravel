@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+Route::get('admin/home', [HomeController::class, 'adminHome'])->name('adminHome')->middleware('is_admin');
 Route::get('/', [DashboardController::class, 'index']);
 
 //user routes
@@ -51,3 +51,7 @@ Route::get('logout', function ()
 
 	return redirect('users');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

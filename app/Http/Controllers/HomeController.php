@@ -23,7 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data['title']   = 'Laravel';
+        $data['content'] = view('dashboard');
+
+        print_r(Session::all());
+
+
+        // return view('layout.index', $data);
     }
 
     /**

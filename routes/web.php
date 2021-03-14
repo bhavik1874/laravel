@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('adminHome')->middleware('is_admin');
-Route::get('/', [DashboardController::class, 'index']);
+
+Route::get('/', function ()
+{
+    return redirect(route('login'));
+});
+Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('adminHome')->middleware('is_admin');
 
 //user routes
 Route::get('/users', [UsersController::class, 'index']);
@@ -37,21 +41,20 @@ Route::get('/projects/delete/{id}', [ProjectsController::class, 'destroy']);
 //send mail route
 Route::get('/send-mail', function ()
 {
-	$details = [
-		'title' => 'Mail from Laravel 8',
-		'body'  => 'This is for testing email using smtp'
-	];
-	\Mail::to('bdp@narola.email')->send(new \App\Mail\MyMail($details));
-	dd('Email is Sent.');
+    $details = [
+        'title' => 'Mail from Laravel 8',
+        'body'  => 'This is for testing email using smtp'
+    ];
+    \Mail::to('bdp@narola.email')->send(new \App\Mail\MyMail($details));
+    dd('Email is Sent.');
 });
 
 Route::get('logout', function ()
 {
-	session()->flush(); // completely remove sesssion data.
+    session()->flush(); // completely remove sesssion data.
 
-	return redirect('users');
+    return redirect('/');
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -25,11 +26,7 @@ class HomeController extends Controller
     {
         $data['title']   = 'Laravel';
         $data['content'] = view('dashboard');
-
-        print_r(Session::all());
-
-
-        // return view('layout.index', $data);
+        return view('layout.index', $data);
     }
 
     /**
